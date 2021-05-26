@@ -7,7 +7,7 @@ import VueAxios from 'vue-axios';
 import animated from 'animate.css'
 import './assets/css/global.css';
 import './assets/font/icon.js'
-axios.defaults.baseURL='api';
+axios.defaults.baseURL='http://www.xwsysapi.com/index/';
 // 添加请求拦截器，在请求头中加token
 /*axios.interceptors.request.use(config => { 
         config.headers.Authorization = window.sessionStorage.getItem('token');
