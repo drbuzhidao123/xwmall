@@ -25,16 +25,21 @@
             </div>
           </div>
           <div class="col-md-3">
-            <a class="search" href="#">
+            <a class="search" href="javascript:;">
               <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-sousuo"></use>
               </svg>
             </a>
-            <a class="cart" href="#">
+            <router-link to="/cart">
               <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-shop"></use>
               </svg>
-            </a>
+            </router-link>
+             <router-link to="/user">
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-yonghu"></use>
+              </svg>
+         </router-link>
           </div>
         </div>
       </div>

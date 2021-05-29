@@ -27,8 +27,8 @@
     <div class="bottom wrap2">
       <div class="copyright">
         © 2021 XWMALL
-        <a href="https://beian.miit.gov.cn" target="_blank"
-          >粤ICP备12043442号</a
+        <a href="javascript:void(0)" target="_blank"
+          >POWER BY XWMALL</a
         >
       </div>
     </div>

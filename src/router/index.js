@@ -11,8 +11,11 @@ import Order from "../views/Order.vue";
 import OrderConfirm from "../views/OrderConfirm.vue";
 import OrderList from "../views/OrderList.vue";
 import OrderPay from "../views/OrderPay.vue";
+import User from "../views/User.vue";
+import Login from "../views/Login.vue";
 
-const routes = [{
+const routes = [
+  {
     path: "/",
     name: "home",
     component: Home,
@@ -33,7 +36,17 @@ const routes = [{
         name: "detail",
         component: Detail
       },
+      {
+        path: "/user",
+        name: "user",
+        component:User
+      }
     ]
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: Login,
   },
   {
     path: "/cart",
@@ -62,6 +75,7 @@ const routes = [{
       },
     ]
   },
+  
 
 ];
 
@@ -69,5 +83,19 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes,
 });
+
+//路由守卫
+router.beforeEach((to, from, next) => {
+  //访问用户模块，购物车模块的时候如果没有token,就跳到登录界面
+  if (to.path == '/user'||to.path == '/cart'||to.path == '/orderConfirm'||to.path == '/orderList'||to.path == '/orderPay') {
+    const tokenStr = window.sessionStorage.getItem('token');
+    if(!tokenStr){
+      return next('/login');   
+    }
+  };
+
+  next();
+
+})
 
 export default router;

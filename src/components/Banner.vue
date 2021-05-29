@@ -7,7 +7,7 @@
       @slideChange="onSlideChange"
       loop
       autoplay
-      :navigation="{}"
+     :pagination="{clickable: true }"
     >
       <swiper-slide>
         <div class="banner-content">
@@ -19,7 +19,7 @@
               <div class="con-r">
                 <p>Advertisement</p>
                 <h1>COMFORTABILITY</h1>
-                <button class="btn">SHOW MORE</button>
+                <button class="btn-swiper">SHOW MORE</button>
               </div>
             </div>
           </div>
@@ -30,17 +30,13 @@
 </template>
 
 <script>
-import SwiperCore, {
-  Autoplay,
-  Navigation,
-  Pagination,
-  Scrollbar,
-  A11y,
-} from "swiper";
-import { Swiper, SwiperSlide } from "swiper/vue";
-SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, Autoplay]);
-import "swiper/swiper.scss";
-import "swiper/components/navigation/navigation.scss";
+import SwiperCore, { Pagination, Autoplay } from 'swiper'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import 'swiper/swiper.scss'
+//这里导入对应样式
+import 'swiper/components/pagination/pagination.scss'
+//导入后在SwiperCore.use([])里注册
+SwiperCore.use([Pagination, Autoplay])
 export default {
   name: "footer",
   components: {
@@ -68,6 +64,7 @@ export default {
   .swiper-container {
     background-color: #f2f3db;
     --swiper-navigation-color: #ffffff;
+    --swiper-pagination-color: #ead481;
     .banner-content {
       padding: 10rem 7rem;
       .row {
@@ -79,13 +76,8 @@ export default {
       .con-r {
         border-left: chocolate 1px solid;
         padding-left: 40px;
-        .btn {
+        .btn-swiper {
           margin-top: 40px;
-          transition: all ease-in-out 0.3s;
-        }
-        .btn:hover {
-          background-color: #000;
-          color: #fff;
         }
       }
     }

@@ -45,18 +45,26 @@
       </div>
     </section>
   </section>
+  <modal title="提示" sureText="查看购物车" btnType="btn" modalType="middle" :showMdal="showMdal">
+    <template v-slot:body>
+        <p>商品添加成功！</p>
+    </template>
+  </modal>
 </template>
 
 <script>
 import Banner from "../components/Banner.vue";
+import Modal from "../components/Modal.vue";
 export default {
   name: "index",
   components: {
     Banner,
+    Modal,
   },
   data() {
     return {
       recommendList: Array,
+      showMdal:0,
     };
   },
   mounted() {
