@@ -2,8 +2,8 @@
   <section class="page-banner">
     <div class="row">
       <div class="col-md-12">
-        <h3>产品</h3>
-        <a href="javascript:void(0)">首页</a><span>/</span><a href="javascript:void(0)">产品</a>
+        <h3>{{title}}</h3>
+        <a :href="path1">{{pathTitle1}}</a><span>/</span><a :href="path2">{{pathTitle2}}</a>
       </div>
     </div>
   </section>
@@ -13,6 +13,24 @@
 export default {
   name: "Page-banner",
   components: {},
+  props:{
+      pathTitle1:{
+          type:String,
+          default:'路径标题',
+      },
+       pathTitle2:{
+          type:String,
+          default:'路径标题',
+      },
+       path1:{
+         type:String,
+         default:'/',
+      },
+      path2:{
+         type:String,
+         default:'/',
+      }
+  }
 };
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <page-banner></page-banner>
+  <page-banner pathTitle1="首页" path1="#/" pathTitle2="产品" path2="#/product"></page-banner>
   <section class="shop wrap3">
     <div class="row">
       <div class="col-md-3">

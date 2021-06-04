@@ -1,94 +1,92 @@
 <template>
+  <insider-header></insider-header>
   <div class="login">
-    <div class="login_header clearfix">
-      <div class="wrap3">
-        <div class="fl">
-          <img src="../assets/img/logo.png" />
-          <span>欢迎光临</span>
-        </div>
-        <div class="fr">
-          <a href="/">返回首页</a>
-        </div>
-      </div>
-    </div>
     <div class="login_content clearfix wrap3">
       <div class="img fl">
-        <img src="../assets/img/index-banner1.png" alt="">
+        <img src="../assets/img/index-banner1.png" alt="" />
       </div>
-      <form action="/login">
-        <div class="login_box fr">
-          <p class="top">用户登录</p>
-          <input
-            type="text"
-            name="username"
-            placeholder="用户名"
-            id="username"
-            :value="username"
-          />
-          <input
-            type="password"
-            placeholder="登录密码"
-            id="password"
-            name="password"
-            maxlength="16"
-            :value="password"
-          />
-          <button class="submit_btn" @click="login()">登录</button>
-        </div>
-      </form>
+      <div class="login_box fr">
+        <p class="top">用户登录</p>
+        <input
+          type="text"
+          name="username"
+          placeholder="用户名"
+          id="username"
+          v-model="username"
+        />
+        <input
+          type="password"
+          placeholder="登录密码"
+          id="password"
+          name="password"
+          maxlength="16"
+          v-model="password"
+        />
+        <button class="submit_btn" @click="login()">登录</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import InsiderHeader from "../components/InsiderHeader.vue";
 export default {
   name: "login",
   components: {
+    InsiderHeader,
   },
   data() {
     return {
-      username:'',
-      password:''
+      username: "",
+      password: "",
     };
   },
   mounted() {
-    
   },
   methods: {
-    login(){
-      if(this.username==''||this.username==null){
-            alert('用户名不能为空');
-            return true;
+    login() {
+      let _this=this;
+      if (this.username == null || this.username == "") {
+        this.$message.error({
+          message: "用户名不能为空",
+          type: "error",
+        });
+        return false;
       }
-    }
+
+      if (this.password == null || this.password == "") {
+        this.$message.error({
+          message: "密码不能为空",
+          type: "error",
+        });
+        return false;
+      }
+      /*登录*/
+        _this.axios.post("login/check",{username:_this.username,password:_this.password},)
+            .then(function (res) {
+              if (res.data.status == 1) {
+                _this.$message.success({
+                  message: res.data.message,
+                  type: "success",
+                });
+                window.sessionStorage.setItem("token", res.data.result.token);
+                window.sessionStorage.setItem("userId", res.data.result.id);
+                window.sessionStorage.setItem("username",res.data.result.username);
+                window.sessionStorage.setItem("mobile",res.data.result.mobile);
+                _this.$router.push({ path: "/user" });
+              } else {
+                _this.$message.error(res.data.message);
+              }
+            });
+        
+    },
   },
 };
 </script>
 
 <style scoped lang="scss">
 .login {
-  .login_header {
-    background-color: #fafafa;
-    padding: 30px 0;
-    .fl {
-      display: flex;
-      align-items: center;
-      img {
-        margin-right: 20px;
-      }
-      span {
-        color: #ababab;
-        padding-left: 20px;
-        border-left: 1px solid #545454a1;
-      }
-    }
-    a {
-      color: #ababab;
-    }
-    a:hover {
-      color: #ead481;
-    }
-  }
+
   .login_content {
     margin-top: 9rem;
     .login_box {
@@ -112,7 +110,7 @@ export default {
         margin-top: 20px;
         font-size: 14px;
       }
-      .submit_btn{
+      .submit_btn {
         margin: 20px;
       }
     }
