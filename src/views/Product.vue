@@ -1,5 +1,10 @@
 <template>
-  <page-banner pathTitle1="首页" path1="#/" pathTitle2="产品" path2="#/product"></page-banner>
+  <page-banner
+    pathTitle1="首页"
+    path1="#/"
+    pathTitle2="产品"
+    path2="#/product"
+  ></page-banner>
   <section class="shop wrap3">
     <div class="row">
       <div class="col-md-3">
@@ -20,15 +25,23 @@
           <h2>Shop Categories</h2>
           <ul class="list">
             <li v-for="item in cateList">
-              <a href="javascript:void(0)" @click="toggleCategroy(item.id)">
+              <div class="parent" v-if="item.children" ref="parent" @click="toggleCate($event)">
+                {{ item.title }}
+                <i class="fr icon_active">
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-xiala"></use>
+                  </svg>
+                </i>
+              </div>
+              <div class="parent" v-else @click="toggleCategroy(item.id)">
                 {{ item.title }}
                 <i class="fr">
                   <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-xiala"></use>
                   </svg>
                 </i>
-              </a>
-              <ul>
+              </div>
+              <ul class="children is_active">
                 <li v-for="children in item.children" @click="toggleCategroy(children.id)">
                   <a href="javascript:void(0)">
                     {{ children.title }}
@@ -41,18 +54,19 @@
       </div>
       <div class="col-md-9">
         <div class="prolist">
+          <loading v-if="isLoading"></loading>
           <ul class="row">
             <li
               class="col-xl-4 col-lg-6 col-md-6 col-sm-6"
               v-for="item in proList"
             >
               <div class="img">
-                <img :src="item.image" @click="goDetail(item.id)"/>
+                <img :src="item.image" @click="goDetail(item.id)" />
               </div>
               <div class="des">
                 <h4>{{ item.title }}</h4>
                 <p>{{ item.summary }}</p>
-                <p class="price">$150</p>
+                <!--<p class="price">$150</p>-->
               </div>
             </li>
           </ul>
@@ -67,11 +81,13 @@
 </template>
 
 <script>
+import Loading from "../components/Loading.vue";
 import pageBanner from "@/components/pageBanner.vue";
 export default {
   name: "Product",
   components: {
     pageBanner,
+    Loading
   },
   data() {
     return {
@@ -84,6 +100,7 @@ export default {
         //每页显示的条数
         pagesize: 6,
       },
+      isLoading:true
     };
   },
   mounted() {
@@ -100,6 +117,16 @@ export default {
         }
       });
     },
+    toggleCate(e){
+        if(e.target.nextSibling.classList.contains('is_active')){
+           e.target.lastChild.classList.remove('icon_active');
+           e.target.nextSibling.classList.remove('is_active');
+      }else{
+           e.target.lastChild.classList.add('icon_active');
+           e.target.nextSibling.classList.add('is_active');
+      }
+    },
+
     toggleCategroy(cate_id) {
       this.listOption.cate_id = cate_id;
       this.getProList();
@@ -110,6 +137,7 @@ export default {
       this.axios.post("Product/getList", this.listOption).then(function (res) {
         if (res.data.status == 1) {
           _this.proList = res.data.result;
+          _this.isLoading = false;
         } else {
           _this.proList = res.data.result;
         }
@@ -129,9 +157,9 @@ export default {
         }
       });
     },
-    goDetail(id){
-       this.$router.push({path:'/detail',query:{proid:id}});
-    }
+    goDetail(id) {
+      this.$router.push({ path: "/detail", query: { proid: id } });
+    },
   },
 };
 </script>
@@ -185,11 +213,26 @@ export default {
     ul {
       li {
         padding-bottom: 15px;
-        i {
+        .parent {
           cursor: pointer;
-          .icon {
-            font-size: 0.6rem;
+          i {
+            cursor: pointer;
+            transform: rotate(180deg);
+            .icon {
+              font-size: 0.6rem;
+            }
           }
+          .icon_active{
+            transform: rotate(0deg);
+          }
+        }
+        .children{
+          display: none;
+          margin-top:10px;
+        }
+        .is_active{
+          transition: all 0.5s ease-in-out;
+          display: block!important;
         }
       }
     }

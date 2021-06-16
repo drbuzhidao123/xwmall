@@ -6,9 +6,14 @@
       <div class="index-product-list">
         <ul class="row">
           <li class="col-md-4" v-for="item in recommendList">
-            <img :src="item.image" />
+            <div class="img"><img :src="item.image" /></div>
             <p>{{ item.title }}</p>
-            <p class="price">$150</p>
+            <a
+              href="javascript:void(0)"
+              class="btn pro_detail"
+              @click="goDetail(item.id)"
+              >查看详情</a
+            >
           </li>
         </ul>
       </div>
@@ -45,26 +50,18 @@
       </div>
     </section>
   </section>
-  <modal title="提示" sureText="查看购物车" btnType="btn" modalType="middle" :showMdal="showMdal">
-    <template v-slot:body>
-        <p>商品添加成功！</p>
-    </template>
-  </modal>
 </template>
-
 <script>
 import Banner from "../components/Banner.vue";
-import Modal from "../components/Modal.vue";
 export default {
   name: "index",
   components: {
     Banner,
-    Modal,
   },
   data() {
     return {
       recommendList: Array,
-      showMdal:0,
+      showMdal: 0,
     };
   },
   mounted() {
@@ -79,9 +76,12 @@ export default {
           if (res.data.status == 1) {
             _this.recommendList = res.data.result;
           } else {
-            alert(res.data.message);
           }
         });
+    },
+
+    goDetail(id) {
+      this.$router.push({ path: "/detail", query: { proid: id } });
     },
   },
 };
@@ -91,9 +91,16 @@ export default {
 .index {
   .s1 {
     margin-bottom: 60px;
-    .index-product-list{
-      img{
-        cursor: pointer;
+    .index-product-list {
+      .img {
+        overflow: hidden;
+        img {
+          cursor: pointer;
+          transition: all ease-in-out 0.5s;
+        }
+        img:hover {
+          transform: scale(1.1, 1.1);
+        }
       }
     }
     img {
@@ -138,5 +145,11 @@ export default {
       }
     }
   }
+}
+
+.pro_detail {
+  display: inline-block;
+  margin-top: 10px;
+  border-radius: 50px;
 }
 </style>

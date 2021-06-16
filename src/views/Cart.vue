@@ -41,7 +41,7 @@
             <el-button
               size="mini"
               type="danger"
-              @click="handleDelete(scope.row.skuId)"
+              @click="handleDelete(scope.row.skuId,scope.$index)"
               >删除</el-button
             >
           </template>
@@ -71,8 +71,7 @@ export default {
     },
   data() {
     return {
-      pageTitle:
-        window.sessionStorage.getItem("username") + "!欢迎查看您的购物车",
+      pageTitle:window.sessionStorage.getItem("username") + "!欢迎查看您的购物车",
       cartData: [],
       sums: Array,
       total: 0,
@@ -101,15 +100,19 @@ export default {
         .then(function (res) {
           if (res.data.status == 1) {
             _this.cartData = res.data.result;
-            _this.cartData = _this.transStr(_this.cartData);
-            _this.toggleAllSelection();
+            _this.cartData = _this.transArr(_this.cartData);
+            _this.toggleAllSelection();//默认全选
           } else {
-            _this.$message.error(res.data.message);
+              _this.$message.error({
+                  message: '没有数据',
+                  showClose: true,
+                  offset: 100,
+                });
           }
         });
     },
 
-    handleDelete(skuId) {
+    handleDelete(skuId,index) {
       let _this = this;
       this.$confirm("删除该条商品, 是否继续?", "提示", {
         confirmButtonText: "确定",
@@ -127,11 +130,18 @@ export default {
                 _this.$message.success({
                   message: res.data.message,
                   type: "success",
+                  showClose: true,
+                  offset: 100,
                 });
-                _this.reload();
+                 _this.cartData.splice(index, 1);
+                //_this.reload();
                 //_this.$router.go(0);
               } else {
-                _this.$message.error(res.data.message);
+                  _this.$message.error({
+                  message: res.data.message,
+                  showClose: true,
+                  offset: 100,
+                });
               }
             });
         })
@@ -188,20 +198,25 @@ export default {
     //下单
     order() {
       if (this.total <= 0) {
-        this.$message.error("请选择要下单的商品");
+           this.$message.error({
+                  message: '请选择要下单的商品',
+                  showClose: true,
+                  offset: 100,
+                });
         return false;
       }
-      
-      //this.$router.push({ path: "/orderConfirm" });
+
+      this.$router.push({ path: "/orderConfirm" , query: {orderData: JSON.stringify(this.multipleSelection)}});
     },
 
-    transStr(obj) {
+    transArr(obj) {
       var arr = [];
       for (var item in obj) {
         arr.push(obj[item]);
       }
       return arr;
     },
+
   },
 };
 </script>

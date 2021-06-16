@@ -85,14 +85,14 @@ export default {
   }
   .modal-dialog {
     position: fixed;
-    top: 50%;
+    top: 40%;
     left: 50%;
     margin-top: -200px;
     margin-left: -220px;
     background-color: #fff;
     padding: 0 20px;
-    width: 440px;
-    height: 320px;
+    width: 420px;
+    height: 300px;
     z-index: 9999;
     .modal-header {
       padding: 10px 0;
@@ -104,9 +104,10 @@ export default {
       }
     }
     .modal-body {
-      height: 200px;
+      height: 180px;
       text-align: center;
       padding-top: 10px;
+      color: #00000085;
     }
 
     .modal-footer {
@@ -137,7 +138,7 @@ export default {
   transition: 0.5s;
   opacity: 1;
   .modal-dialog {
-    top: 50%;
+    top: 40%;
     transition: 0.5s;
   }
 }
@@ -146,7 +147,7 @@ export default {
   transition: 0.5s;
   opacity: 1;
   .modal-dialog {
-    top: 50%;
+    top: 40%;
     transition: 0.5s;
   }
 }

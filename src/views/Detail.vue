@@ -113,7 +113,11 @@ export default {
           if (res.data.status == 1) {
             _this.product = res.data.result;
           } else {
-            _this.$message.error(res.data.message);
+             _this.$message.error({
+                  message: res.data.message,
+                  showClose: true,
+                  offset: 100,
+                });
           }
         });
     },
@@ -125,7 +129,11 @@ export default {
           if (res.data.status == 1) {
             _this.specs = res.data.result;
           } else {
-            _this.$message.error(res.data.message);
+             _this.$message.error({
+                  message: res.data.message,
+                  showClose: true,
+                  offset: 100,
+                });
           }
         });
     },
@@ -142,23 +150,35 @@ export default {
             if (res.data.status == 1) {
               _this.sku = res.data.result;
             } else {
-              _this.$message.error(res.data.message);
+               _this.$message.error({
+                  message: res.data.message,
+                  showClose: true,
+                  offset: 100,
+                });
             }
           });
       }
     },
     addCart() {
+      let _this = this;
       let selectArr = this.transStr(this.selectOption);
       let specsArr = this.transStr(this.specs);
       if (this.sku.stock <= 0) {
-        this.$message.error("没有库存了");
+         _this.$message.error({
+                  message: "没有库存了",
+                  showClose: true,
+                  offset: 100,
+                });
         return false;
       }
       if (selectArr.length < specsArr.length) {
-        this.$message.error("请选择规格");
+         _this.$message.error({
+                  message: "请选择规",
+                  showClose: true,
+                  offset: 100,
+                });
         return false;
       }
-      let _this = this;
       this.axios.post("Cart/add", {
           userId: this.userId,
           skuId: this.sku.id,
@@ -167,7 +187,11 @@ export default {
           if (res.data.status == 1) {
             _this.showMdal=true;
           } else {
-            _this.$message.error(res.data.message);
+              _this.$message.error({
+                  message: res.data.message,
+                  showClose: true,
+                  offset: 100,
+                });
           }
         });
     },
@@ -237,6 +261,9 @@ export default {
             min-height: 50px;
             .spcesValue {
               margin: 0 20px;
+              min-width: 130px;
+              display: inline-block;
+              text-align: center;
             }
           }
         }

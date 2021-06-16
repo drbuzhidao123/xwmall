@@ -19,8 +19,10 @@ export default {
       this.pageTitle = '订单确认';
     }else if(path=="/orderPay"){
       this.pageTitle = '支付页面';
+    }else if(path=="/orderReturn"){
+      this.pageTitle = '支付结果页面';
     }else{
-       this.pageTitle = '订单列表'
+       this.pageTitle = '订单支付'
     }
   },
   data(){

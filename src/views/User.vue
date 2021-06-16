@@ -12,17 +12,32 @@
           <h2>个人中心</h2>
           <ul class="list">
             <li>
-              <a href="javascript:void(0)">
+               <router-link to="/userInfo">
                 个人信息
                 <i class="fr">
                   <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-xiala"></use>
                   </svg>
                 </i>
-              </a>
+             </router-link>
               <ul>
-                <li>
-                  <a href="javascript:void(0)"> </a>
+                <li class="children">
+                  <router-link to="/userEdit">信息修改</router-link>
+                </li>
+              </ul>
+            </li>
+             <li>
+               <a href="javascript:void(0)">
+                订单管理
+                <i class="fr">
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-xiala"></use>
+                  </svg>
+                </i>
+             </a>
+              <ul>
+                <li class="children">
+                  <router-link to="/orderList">订单列表</router-link>
                 </li>
               </ul>
             </li>
@@ -33,11 +48,7 @@
         </div>
       </div>
       <div class="col-md-9">
-        <div class="userInfo">
-          <p><strong>用户Id:</strong>{{ userId }}</p>
-          <p><strong>用户名:</strong>{{ username }}</p>
-          <p><strong>手机:</strong>{{ mobile }}</p>
-        </div>
+         <router-view></router-view>
       </div>
     </div>
   </section>
@@ -55,6 +66,7 @@ export default {
       userId: window.sessionStorage.getItem("userId"),
       username: window.sessionStorage.getItem("username"),
       mobile: window.sessionStorage.getItem("mobile"),
+      address:window.sessionStorage.getItem("address"),
     };
   },
   mounted() {
@@ -80,6 +92,9 @@ export default {
 <style scoped lang="scss">
 .user {
   min-height: 400px;
+  .col-md-9{
+    margin-bottom: 20px;
+  }
   .categroy {
     border: 1px solid #eeeeee;
     padding: 17px 18px 29px;
@@ -90,6 +105,9 @@ export default {
     }
     ul {
       li {
+        .children{
+          margin-top: 10px;
+        }
         padding-bottom: 15px;
         i {
           cursor: pointer;
@@ -98,13 +116,6 @@ export default {
           }
         }
       }
-    }
-  }
-  .userInfo {
-    border: 1px solid #eeeeee;
-    padding: 20px;
-    strong {
-      margin-right: 20px;
     }
   }
 }

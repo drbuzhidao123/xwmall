@@ -7,7 +7,7 @@ audio,canvas,progress,video { display: inline-block;vertical-align: baseline;}
 audio:not([controls]) { display: none;height: 0;}
 a { background: transparent;outline: none; }
 a:active,a:hover { outline: 0;}
-img { border: 0;max-width:100%;height:auto;width:auto\9;-ms-interpolation-mode: bicubic;}
+img { border: 0;max-width:100%;height:auto;width:auto\9;-ms-interpolation-mode: bicubic;display: block;}
 img.inherit { max-width:  inherit; *width: auto;}
 table,tr,td{ max-width: 100%;width:auto\9;}
 .video embed,.video object,.video iframe { width:100%;height:auto;}
